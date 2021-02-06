@@ -1,0 +1,15 @@
+{
+    "name": "saba/to-do",
+    "description": "task manager (ajax,php,mysql)",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "saba",
+            "email": "sereno.project@gmail.com"
+        }
+    ],
+    "require": {
+        "hekmatinasser/verta": "^1.11"
+    }
+}
