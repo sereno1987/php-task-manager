@@ -1,7 +1,7 @@
 <?php
-$dataBaseConfig=[
+$dataBaseConfig=(object)[
     'host'=>'localhost',
     'db'=>'task_manager',
     'user'=>'root',
-    'pass'=>'root',
+    'password'=>'root',
 ];

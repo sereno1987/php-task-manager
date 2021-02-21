@@ -10,6 +10,7 @@
         }
     ],
     "require": {
-        "hekmatinasser/verta": "^1.11"
+        "hekmatinasser/verta": "^1.11",
+        "ext-pdo": "*"
     }
 }

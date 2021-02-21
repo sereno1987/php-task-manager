@@ -11,7 +11,7 @@
 <div class="page">
   <div class="pageHeader">
     <div class="title">Dashboard</div>
-    <div class="userPanel"><i class="fa fa-chevron-down"></i><span class="username">John Doe </span><img src="https://s3.amazonaws.com/uifaces/faces/twitter/kolage/73.jpg" width="40" height="40"/></div>
+    <div class="userPanel"><i class="fa fa-chevron-down"></i><span class="username">Bezhio Hag </span><img src=/assets/img/bezhios.jpeg width="40" height="40"/></div>
   </div>
   <div class="main">
     <div class="nav">
@@ -21,49 +21,51 @@
         </div>
       </div>
       <div class="menu">
-        <div class="title">Navigation</div>
-        <ul>
-          <li> <i class="fa fa-home"></i>Home</li>
-          <li><i class="fa fa-signal"></i>Activity</li>
-          <li class="active"> <i class="fa fa-tasks"></i>Manage Tasks</li>
-          <li> <i class="fa fa-envelope"></i>Messages</li>
+        <div class="title">Folders</div>
+        <ul class="folders-list">
+            <li class="active"><i class="fa fa-folder"></i>All Tasks</li>
+            <?php  foreach ($folders as $folder):?>
+                <li class="active">
+                    <a href="?folder_id=<?=$folder->id ?>"><i class="fa fa-folder"></i><?= $folder->name ?> </a>
+                    <a class="remove" onclick="return confirm('Are you sure to delete this folder?')" href="?delete_folder=<?=$folder->id ?>"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                </li>
+            <?php endforeach; ?>
+
         </ul>
+          <div id="newFolderInput">
+              <input type="text" id="newFolderInput" style="margin-outside: 5px; width: 80%; height: 25px" placeholder="add new folder"/>
+<!--              <button id="newFolderBtn" class="btn clickable">+</button>-->
+          </div>
+          <div class="functions">
+              <div  id="newFolderBtn" class="button active" >Add Folder</div>
+          </div>
       </div>
+
     </div>
     <div class="view">
       <div class="viewHeader">
-        <div class="title">Manage Tasks</div>
-        <div class="functions">
-          <div class="button active">Add New Task</div>
-          <div class="button">Completed</div>
-          <div class="button inverz"><i class="fa fa-trash-o"></i></div>
-        </div>
+          <div id="newFolderInput">
+              <input type="text" id="newTaskInput"  placeholder="type new task name and enter"/>
+          </div>
+       <!-- <div class="functions">
+            <div class="button active" >Add Task</div>
+        </div> -->
       </div>
       <div class="content">
         <div class="list">
           <div class="title">Today</div>
-          <ul>
-            <li class="checked"><i class="fa fa-check-square-o"></i><span>Update team page</span>
-              <div class="info">
-                <div class="button green">In progress</div><span>Complete by 25/04/2014</span>
-              </div>
-            </li>
-            <li><i class="fa fa-square-o"></i><span>Design a new logo</span>
-              <div class="info">
-                <div class="button">Pending</div><span>Complete by 10/04/2014</span>
-              </div>
-            </li>
-            <li><i class="fa fa-square-o"></i><span>Find a front end developer</span>
-              <div class="info"></div>
-            </li>
-          </ul>
-        </div>
-        <div class="list">
-          <div class="title">Tomorrow</div>
-          <ul>
-            <li><i class="fa fa-square-o"></i><span>Find front end developer</span>
-              <div class="info"></div>
-            </li>
+          <ul class="tasks-list">
+              <?php  foreach ($tasks as $task):?>
+                  <li class="<?= $task->status ?'checked': ''; ?>"><i class="<?= $task->status?'fa fa-check-square-o': 'fa fa-square-o'; ?>"></i><span><?= $task->title ?></span>
+                      <div class="info">
+                          <div class="button gray"><?= $task->created_at ?></div><span class="delete-task">
+                              <a class="remove" onclick="return confirm('Are you sure to delete this folder?')" href="?delete_task=<?=$task->id ?>"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                          </span><span>created at:</span>
+                      </div>
+
+                  </li>
+
+              <?php endforeach; ?>
           </ul>
         </div>
       </div>
@@ -71,7 +73,31 @@
   </div>
 </div>
 <!-- partial -->
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script><script  src="assets/js/script.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script  src="assets/js/script.js"></script>
+<script>
+    $(document).ready(function (){
+        $('#newFolderBtn').click(function (e){
+            var input=$('input#newFolderInput');
+            // alert(input.val());
+            $.ajax({
+                url:"controller/ajax-handler.php",
+                method: "post",
+                data:{action:"addFolder", folderName:input.val()},
+                success:function (responce){
+
+                    if(responce == 1){
+                        $('<li><a href="#"><i class="fa fa-folder"></i>'+input.val()+'</a><a class="remove" href="#"><i class="fa fa-trash-o" aria-hidden="true"></i></a></li>').appendTo('ul.folders-list');
+                    }
+                     else {
+                         alert(responce);
+                     }
+
+                },
+            })
+        });
+    })
+</script>
 
 </body>
 </html>
