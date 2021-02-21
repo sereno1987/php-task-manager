@@ -23,9 +23,9 @@
       <div class="menu">
         <div class="title">Folders</div>
         <ul class="folders-list">
-            <li class="active"><i class="fa fa-folder"></i>All Tasks</li>
+            <li class="<?= isset($GET['folder_id'])? '': 'active' ?>"><i class="fa fa-folder"></i>All Tasks</li>
             <?php  foreach ($folders as $folder):?>
-                <li class="active">
+                <li>
                     <a href="?folder_id=<?=$folder->id ?>"><i class="fa fa-folder"></i><?= $folder->name ?> </a>
                     <a class="remove" onclick="return confirm('Are you sure to delete this folder?')" href="?delete_folder=<?=$folder->id ?>"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                 </li>
@@ -55,17 +55,21 @@
         <div class="list">
           <div class="title">Today</div>
           <ul class="tasks-list">
-              <?php  foreach ($tasks as $task):?>
-                  <li class="<?= $task->status ?'checked': ''; ?>"><i class="<?= $task->status?'fa fa-check-square-o': 'fa fa-square-o'; ?>"></i><span><?= $task->title ?></span>
-                      <div class="info">
-                          <div class="button gray"><?= $task->created_at ?></div><span class="delete-task">
-                              <a class="remove" onclick="return confirm('Are you sure to delete this folder?')" href="?delete_task=<?=$task->id ?>"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                          </span><span>created at:</span>
-                      </div>
+              <?php if(sizeof($tasks)): ?>
+                  <?php  foreach ($tasks as $task):?>
+                      <li class="<?= $task->status ?'checked': ''; ?>"><i class="<?= $task->status?'fa fa-check-square-o': 'fa fa-square-o'; ?>"></i><span><?= $task->title ?></span>
+                          <div class="info">
+                              <div class="button gray"><?= $task->created_at ?></div><span class="delete-task">
+                                  <a class="remove" onclick="return confirm('Are you sure to delete this folder?')" href="?delete_task=<?=$task->id ?>"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                              </span><span>created at:</span>
+                          </div>
 
-                  </li>
+                      </li>
 
-              <?php endforeach; ?>
+                  <?php endforeach; ?>
+              <?php else: ?>
+                <li> Oh! you haven't created any tasks in this folder.</li>
+              <?php endif; ?>
           </ul>
         </div>
       </div>
