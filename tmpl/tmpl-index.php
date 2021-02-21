@@ -96,11 +96,32 @@
                      else {
                          alert(responce);
                      }
-
                 },
             })
         });
+        $('#newTaskInput').keypress(function(event){
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            var taskTitle=$('input#newTaskInput');
+            if(keycode == '13'){
+                // event.stopPropagation();
+                $.ajax({
+                    url:"controller/ajax-handler.php",
+                    method: "post",
+                    data:{action:"addTask", taskTitle:taskTitle.val(), folderId:<?= isset($_GET['folder_id'])? $_GET['folder_id']:0 ?>},
+                    success:function (responce){
+                        if(responce == 1){
+                            location.reload();
+                        }
+                        else {
+                            alert(responce);
+                        }
+                    },
+                })
+            }
+        });
+        $('#newTaskInput').focus();
     })
+
 </script>
 
 </body>
