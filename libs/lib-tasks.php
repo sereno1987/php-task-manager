@@ -49,6 +49,15 @@ function deleteTask($task_id){
     return $stm->rowCount();
 
 }
+
+function doneToggle($task_id){
+    global $connection;
+    $userId=getCurrentUserId();
+    $sql="update tasks set status=1-status where id=:task_id and user_id=:userId";
+    $stm= $connection->prepare($sql);
+    $stm->execute([":task_id"=>$task_id , ":userId"=>$userId]);
+   return $stm->rowCount();
+}
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Folders
 
 # get folders name from database

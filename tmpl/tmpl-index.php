@@ -23,7 +23,7 @@
       <div class="menu">
         <div class="title">Folders</div>
         <ul class="folders-list">
-            <li class="<?= isset($GET['folder_id'])? '': 'active' ?>"><i class="fa fa-folder"></i>All Tasks</li>
+            <li class="active"><a href="<?= site_url();?>"><i class="fa fa-folder"></i>All</a></li>
             <?php  foreach ($folders as $folder):?>
                 <li>
                     <a href="?folder_id=<?=$folder->id ?>"><i class="fa fa-folder"></i><?= $folder->name ?> </a>
@@ -57,7 +57,7 @@
           <ul class="tasks-list">
               <?php if(sizeof($tasks)): ?>
                   <?php  foreach ($tasks as $task):?>
-                      <li class="<?= $task->status ?'checked': ''; ?>"><i class="<?= $task->status?'fa fa-check-square-o': 'fa fa-square-o'; ?>"></i><span><?= $task->title ?></span>
+                      <li class="<?= $task->status ?'checked': ''; ?>"><i data-taskId="<?= $task->id?>" class=" isDone clickable <?= $task->status?'fa fa-check-square-o': 'fa fa-square-o'; ?>"></i><span><?= $task->title ?></span>
                           <div class="info">
                               <div class="button gray"><?= $task->created_at ?></div><span class="delete-task">
                                   <a class="remove" onclick="return confirm('Are you sure to delete this folder?')" href="?delete_task=<?=$task->id ?>"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
@@ -119,6 +119,24 @@
                 })
             }
         });
+        $('.isDone').click(function (e){
+            var taskId= $(this).attr('data-TaskId');
+            $.ajax({
+                url:"controller/ajax-handler.php",
+                method: "post",
+                data:{action:"doneToggle", taskId:taskId},
+                success:function (responce){
+
+                    if(responce == 1){
+                        location.reload();
+                    }
+                    else {
+                        alert(responce);
+                    }
+                },
+            })
+        });
+
         $('#newTaskInput').focus();
     })
 

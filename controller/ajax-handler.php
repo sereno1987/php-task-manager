@@ -25,6 +25,15 @@ switch ($_POST["action"]){
         echo addFolder($_POST["folderName"]);
         break;
 
+    case "doneToggle":
+        $taskId=$_POST["taskId"];
+        if(!isset($taskId) || !is_numeric($taskId)){
+            echo "Invalid task Id";
+            die();
+        }
+        echo doneToggle($taskId);
+        break;
+
     case "addTask":
         $taskTitle=$_POST["taskTitle"];
         $folderId=$_POST["folderId"];

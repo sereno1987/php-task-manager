@@ -1,6 +1,5 @@
 <?php defined('BASE_PATH') OR die("permission is denied");
 
-
 //function getCurrentUrl(){
 //    return 1;
 //}
@@ -27,3 +26,8 @@ function dd($var){
     var_dump($var);
     echo "</pre>";
 }
+
+function site_url($uri=''){
+    return BASE_URL. $uri;
+}
+
