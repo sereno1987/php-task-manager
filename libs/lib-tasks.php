@@ -30,12 +30,12 @@ function getTasks(){
     return $result;
 }
 
-function addTask($task_title,$folder_id){
+function addTask($task_title, $folderId){
     global $connection;
     $userId=getCurrentUserId();
-    $sql="insert into tasks (title,user_id,folder_id) values (:taskTitle, :userId, :folderId)";
+    $sql="insert into tasks (title,user_id,folder_id,status) values (:taskTitle, :userId, :folderId, :status)";
     $stm= $connection->prepare($sql);
-    $stm->execute([":taskTitle"=> $task_title, ":userId"=>$userId, ":folderId"=>$folder_id]);
+    $stm->execute([":taskTitle"=> $task_title, ":userId"=>$userId, ":folderId"=>$folderId,":status"=> 0]);
     return $stm->rowCount();
 
 }
@@ -48,6 +48,15 @@ function deleteTask($task_id){
     $stm->execute();
     return $stm->rowCount();
 
+}
+
+function doneToggle($task_id){
+    global $connection;
+    $userId=getCurrentUserId();
+    $sql="update tasks set status=1-status where id=:task_id and user_id=:userId";
+    $stm= $connection->prepare($sql);
+    $stm->execute([":task_id"=>$task_id , ":userId"=>$userId]);
+   return $stm->rowCount();
 }
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Folders
 
