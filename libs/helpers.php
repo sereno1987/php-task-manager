@@ -14,10 +14,25 @@ function diePage($msg){
     die();
 }
 
+function message($msg, $status){
+    if ($status=='failure'){
+        echo "<div style='width: 100%; height: 40px; background-color: orange; border: darkred; padding: 5    px;text-align: center'>";
+        echo $msg;
+        echo  "</div>";
+    }elseif ($status=='success'){
+        echo "<div style='width: 100%; height: 40px; background-color: forestgreen; border: darkgreen; padding: 5px;text-align: center'>";
+        echo $msg;
+        echo  "</div>";
+    }
+
+}
+
+
 function isAjaxRequest(){
     if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' ) {
         return true;
-    }
+    }message("You logged in successfully. welcome!<br>
+                    <a href='{$home_url}'>go to tasks</a>", 'success');
     return false;
 }
 
@@ -31,3 +46,7 @@ function site_url($uri=''){
     return BASE_URL. $uri;
 }
 
+function redirect($url){
+    header("location:".$url);
+    die();
+}

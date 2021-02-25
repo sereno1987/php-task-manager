@@ -7,13 +7,16 @@
 
 # or you can use this one- more optimized
 defined('BASE_PATH') OR die("permission is denied");
-
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>auth
 #get current user
 function getCurrentUserId(){
     #get logged in user
-    return 1;
+    $currentUser=(getLoggedInUser());
+    return $currentUser->id ??0;
 }
-#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Tasks
+
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Tasks
 # get tasks name from database
 function getTasks(){
     global $connection;
@@ -33,9 +36,9 @@ function getTasks(){
 function addTask($task_title, $folderId){
     global $connection;
     $userId=getCurrentUserId();
-    $sql="insert into tasks (title,user_id,folder_id,status) values (:taskTitle, :userId, :folderId, :status)";
+    $sql="insert into tasks (title,user_id,folder_id) values (:taskTitle, :userId, :folderId)";
     $stm= $connection->prepare($sql);
-    $stm->execute([":taskTitle"=> $task_title, ":userId"=>$userId, ":folderId"=>$folderId,":status"=> 0]);
+    $stm->execute([":taskTitle"=> $task_title, ":userId"=>$userId, ":folderId"=>$folderId]);
     return $stm->rowCount();
 
 }
@@ -58,7 +61,7 @@ function doneToggle($task_id){
     $stm->execute([":task_id"=>$task_id , ":userId"=>$userId]);
    return $stm->rowCount();
 }
-#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Folders
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Folders
 
 # get folders name from database
 function getFolders()
