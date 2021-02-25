@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title><?= SITE_TITLE ?></title>
-  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="<?= site_url('assets/css/style.css')?>">
 
 </head>
 <body>
@@ -11,7 +11,9 @@
 <div class="page">
   <div class="pageHeader">
     <div class="title">Dashboard</div>
-    <div class="userPanel"><i class="fa fa-chevron-down"></i><span class="username">Bezhio Hag </span><img src=/assets/img/bezhios.jpeg width="40" height="40"/></div>
+    <div class="userPanel">
+        <a href="<?= site_url('?logout=1') ?>"><i class="fa fa-sign-out"></i></a>
+        <span class="username"><?= $loggedInUser->username ?? 'User'?> </span><img src="<?= $loggedInUser->profileImage?>"/></div>
   </div>
   <div class="main">
     <div class="nav">
@@ -78,7 +80,7 @@
 </div>
 <!-- partial -->
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-    <script  src="assets/js/script.js"></script>
+    <script  src="<?= site_url('assets/js/script.js')?>"></script>
 <script>
     $(document).ready(function (){
         $('#newFolderBtn').click(function (e){

@@ -1,6 +1,20 @@
 <?php
 include "bootstrap/init.php";
 
+# check for logged out users
+if (isset($_GET['logout'])){
+    #redirect to auth page
+    logout();
+    }
+
+# check for loggedin users
+if (!isLoggedIn()){
+    #redirect to auth page
+    redirect(site_url('auth.php'));
+}
+
+$loggedInUser= getLoggedInUser();
+
 # for delete and update always check it firstly
 if (isset($_GET['delete_folder']) && is_numeric($_GET['delete_folder'])){
     $deletedItems=deleteFolder(($_GET['delete_folder']));

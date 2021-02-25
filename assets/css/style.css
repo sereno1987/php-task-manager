@@ -49,11 +49,21 @@ body {
 .pageHeader .userPanel {
   width: 40%;
   float: right;
+
 }
+
+.pageHeader .userPanel a li{
+
+  text-decoration:#54b9cd;
+
+}
+
 .pageHeader .userPanel i {
   float: right;
   line-height: 40px;
   padding-right: 10px;
+  width: 40px;
+  height:40px;
 }
 .pageHeader .userPanel .username {
   float: right;
@@ -67,6 +77,8 @@ body {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
+  width: 40px;
+  height:40px;
 }
 
 .main {
@@ -321,8 +333,7 @@ body {
   background-color: #0c4045;
 
 }
-
-
 .clear {
   clear: both;
 }
+
